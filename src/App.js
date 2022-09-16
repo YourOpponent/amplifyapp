@@ -9,6 +9,11 @@ import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } fr
 
 const initialFormState = { name: '', description: '' }
 
+const API_ENDPOINT = 'https://discord.com/api/v10';
+const CLIENT_ID = '332269999912132097';
+const CLIENT_SECRET = '937it3ow87i4ery69876wqire';
+const REDIRECT_URI = 'https://music.ishkur.com';
+
 function App() {
   const [notes, setNotes] = useState([]);
   const [formData, setFormData] = useState(initialFormState);
