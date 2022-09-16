@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { API, Storage } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
+import { DataStore } from '@aws-amplify/datastore';
+import { Note } from './models';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { listNotes } from './graphql/queries';
@@ -9,10 +11,6 @@ import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } fr
 
 const initialFormState = { name: '', description: '' }
 
-const API_ENDPOINT = 'https://discord.com/api/v10';
-const CLIENT_ID = '332269999912132097';
-const CLIENT_SECRET = '937it3ow87i4ery69876wqire';
-const REDIRECT_URI = 'https://music.ishkur.com';
 
 function App() {
   const [notes, setNotes] = useState([]);
@@ -31,16 +29,21 @@ function App() {
   }
 
   async function fetchNotes() {
-    const apiData = await API.graphql({ query: listNotes });
-    const notesFromAPI = apiData.data.listNotes.items;
-    await Promise.all(notesFromAPI.map(async note => {
-      if (note.image) {
-        const image = await Storage.get(note.image);
-        note.image = image;
-      }
-      return note;
-    }))
-    setNotes(apiData.data.listNotes.items);
+    //Original
+    // const apiData = await API.graphql({ query: listNotes });
+    // const notesFromAPI = apiData.data.listNotes.items;
+    // await Promise.all(notesFromAPI.map(async note => {
+    //   if (note.image) {
+    //     const image = await Storage.get(note.image);
+    //     note.image = image;
+    //   }
+    //   return note;
+    // }));
+    // setNotes(apiData.data.listNotes.items);
+
+    // Diff
+    const notes = await DataStore.query(Note);
+    setNotes(notes);
   }
 
   async function createNote() {
@@ -57,7 +60,13 @@ function App() {
   async function deleteNote({ id }) {
     const newNotesArray = notes.filter(note => note.id !== id);
     setNotes(newNotesArray);
-    await API.graphql({ query: deleteNoteMutation, variables: { input: { id } }});
+
+    //Original
+    // await API.graphql({ query: deleteNoteMutation, variables: { input: id  }});
+
+    //Diff way
+    const noteToDelete = await DataStore.query(Note, id );
+    DataStore.delete(noteToDelete);
   }
 
   return (
@@ -82,25 +91,19 @@ function App() {
         {
           notes.map(note => (
             <div key={note.id || note.name}>
-              <h2>{note.name}</h2>
+              <h2>{note.id}</h2>
+              <p>{note.name}</p>
               <p>{note.description}</p>
+              {/* <p>{note.image}</p> */}
               <button onClick={() => deleteNote(note)}>Delete note</button>
+              {
+                note.image && <img src={note.image} style={{width: 400}} alt=""/>
+              }
             </div>
           ))
         }
       </div>
-      {
-        notes.map(note => (
-          <div key={note.id || note.name}>
-            <h2>{note.name}</h2>
-            <p>{note.description}</p>
-            <button onClick={() => deleteNote(note)}>Delete note</button>
-            {
-              note.image && <img src={note.image} style={{width: 400}} />
-            }
-          </div>
-        ))
-      }
+
       <Authenticator>
         {({ signOut, user }) => (
           <div className="App">
