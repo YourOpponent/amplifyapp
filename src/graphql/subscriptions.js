@@ -5,11 +5,13 @@ export const onCreateArtist = /* GraphQL */ `
   subscription OnCreateArtist {
     onCreateArtist {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version
@@ -22,11 +24,13 @@ export const onUpdateArtist = /* GraphQL */ `
   subscription OnUpdateArtist {
     onUpdateArtist {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version
@@ -39,11 +43,13 @@ export const onDeleteArtist = /* GraphQL */ `
   subscription OnDeleteArtist {
     onDeleteArtist {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version

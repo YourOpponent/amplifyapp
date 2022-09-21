@@ -9,7 +9,7 @@ import '@aws-amplify/ui-react/styles.css';
 // import { listArtists } from './graphql/queries';
 import { createArtist as createArtistMutation, deleteArtist as deleteArtistMutation } from './graphql/mutations';
 
-const initialFormState = { name: '', description: '', twitchName: '' }
+const initialFormState = { visual_name: '', twitchName: '', description: '', location: '', email: '', slug:'' }
 
 
 function App() {
@@ -23,8 +23,8 @@ function App() {
   async function onChange(e) {
     if (!e.target.files[0]) return
     const file = e.target.files[0];
-    setFormData({ ...formData, image: file.name });
-    await Storage.put(file.name, file);
+    setFormData({ ...formData, image: file.visual_name });
+    await Storage.put(file.visual_name, file);
     fetchArtists();
   }
 
@@ -47,7 +47,7 @@ function App() {
   }
 
   async function createArtist() {
-    if (!formData.name || !formData.description) return;
+    if (!formData.visual_name || !formData.description) return;
     await API.graphql({ query: createArtistMutation, variables: { input: formData } });
     if (formData.image) {
       const image = await Storage.get(formData.image);
@@ -73,9 +73,14 @@ function App() {
     <div className="App">
       <h1>My Artists App</h1>
       <input
-        onChange={e => setFormData({ ...formData, 'name': e.target.value})}
+        onChange={e => setFormData({ ...formData, 'visual_name': e.target.value})}
         placeholder="Artist name"
-        value={formData.name}
+        value={formData.visual_name}
+      />
+      <input
+        onChange={e => setFormData({ ...formData, 'twitchName': e.target.value})}
+        placeholder="Artist Twitch Name"
+        value={formData.twitchName}
       />
       <input
         onChange={e => setFormData({ ...formData, 'description': e.target.value})}
@@ -83,9 +88,19 @@ function App() {
         value={formData.description}
       />
       <input
-        onChange={e => setFormData({ ...formData, 'twitchName': e.target.value})}
-        placeholder="Artist Twitch Name"
-        value={formData.twitchName}
+        onChange={e => setFormData({ ...formData, 'location': e.target.value})}
+        placeholder="Artist Location"
+        value={formData.location}
+      />
+      <input
+        onChange={e => setFormData({ ...formData, 'email': e.target.value})}
+        placeholder="Artist Email"
+        value={formData.email}
+      />
+      <input
+        onChange={e => setFormData({ ...formData, 'slug': e.target.value})}
+        placeholder="Artist Slug"
+        value={formData.slug}
       />
       <input
         type="file"
@@ -95,11 +110,15 @@ function App() {
       <div style={{marginBottom: 30}}>
         {
           Artists.map(Artist => (
-            <div key={Artist.id || Artist.name}>
+            <div key={Artist.id || Artist.visual_name}>
               <h2>{Artist.id}</h2>
-              <p>{Artist.name}</p>
+              <p>{Artist.visual_name}</p>
               <p>{Artist.twitchName}</p>
               <p>{Artist.description}</p>
+              <p>{Artist.location}</p>
+              <p>{Artist.email}</p>
+              <p>{Artist.slug}</p>
+              
               {/* <p>{Artist.image}</p> */}
               <button onClick={() => deleteArtist(Artist)}>Delete Artist</button>
               {

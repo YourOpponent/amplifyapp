@@ -5,11 +5,13 @@ export const getArtist = /* GraphQL */ `
   query GetArtist($id: ID!) {
     getArtist(id: $id) {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version
@@ -27,11 +29,13 @@ export const listArtists = /* GraphQL */ `
     listArtists(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
+        visual_name
         twitchName
         description
         image
         location
+        email
+        slug
         createdAt
         updatedAt
         _version
@@ -58,11 +62,13 @@ export const syncArtists = /* GraphQL */ `
     ) {
       items {
         id
-        name
+        visual_name
         twitchName
         description
         image
         location
+        email
+        slug
         createdAt
         updatedAt
         _version

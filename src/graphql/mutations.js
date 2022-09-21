@@ -8,11 +8,13 @@ export const createArtist = /* GraphQL */ `
   ) {
     createArtist(input: $input, condition: $condition) {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version
@@ -28,11 +30,13 @@ export const updateArtist = /* GraphQL */ `
   ) {
     updateArtist(input: $input, condition: $condition) {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version
@@ -48,11 +52,13 @@ export const deleteArtist = /* GraphQL */ `
   ) {
     deleteArtist(input: $input, condition: $condition) {
       id
-      name
+      visual_name
       twitchName
       description
       image
       location
+      email
+      slug
       createdAt
       updatedAt
       _version
