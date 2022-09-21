@@ -1,7 +1,11 @@
-type Note @model @auth(rules: [{allow: public}]) {
+type Artist @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String!
+  visual_name: String!
+  twitchName: String
   description: String
   image: String
+  location: String
+  email: AWSEmail
+  slug: String
 }
  

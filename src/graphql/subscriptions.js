@@ -1,72 +1,54 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onCreateTodo(filter: $filter) {
+export const onCreateArtist = /* GraphQL */ `
+  subscription OnCreateArtist {
+    onCreateArtist {
       id
       name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onUpdateTodo(filter: $filter) {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onDeleteTodo(filter: $filter) {
-      id
-      name
-      description
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onCreateNote = /* GraphQL */ `
-  subscription OnCreateNote($filter: ModelSubscriptionNoteFilterInput) {
-    onCreateNote(filter: $filter) {
-      id
-      name
+      twitchName
       description
       image
+      location
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const onUpdateNote = /* GraphQL */ `
-  subscription OnUpdateNote($filter: ModelSubscriptionNoteFilterInput) {
-    onUpdateNote(filter: $filter) {
+export const onUpdateArtist = /* GraphQL */ `
+  subscription OnUpdateArtist {
+    onUpdateArtist {
       id
       name
+      twitchName
       description
       image
+      location
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;
-export const onDeleteNote = /* GraphQL */ `
-  subscription OnDeleteNote($filter: ModelSubscriptionNoteFilterInput) {
-    onDeleteNote(filter: $filter) {
+export const onDeleteArtist = /* GraphQL */ `
+  subscription OnDeleteArtist {
+    onDeleteArtist {
       id
       name
+      twitchName
       description
       image
+      location
       createdAt
       updatedAt
+      _version
+      _deleted
+      _lastChangedAt
     }
   }
 `;

@@ -1,7 +1,7 @@
 export const schema = {
     "models": {
-        "Note": {
-            "name": "Note",
+        "Artist": {
+            "name": "Artist",
             "fields": {
                 "id": {
                     "name": "id",
@@ -10,11 +10,18 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "name": {
-                    "name": "name",
+                "visual_name": {
+                    "name": "visual_name",
                     "isArray": false,
                     "type": "String",
                     "isRequired": true,
+                    "attributes": []
+                },
+                "twitchName": {
+                    "name": "twitchName",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "description": {
@@ -26,6 +33,27 @@ export const schema = {
                 },
                 "image": {
                     "name": "image",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "location": {
+                    "name": "location",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "email": {
+                    "name": "email",
+                    "isArray": false,
+                    "type": "AWSEmail",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "slug": {
+                    "name": "slug",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -49,7 +77,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Notes",
+            "pluralName": "Artists",
             "attributes": [
                 {
                     "type": "model",
@@ -76,5 +104,5 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {},
-    "version": "60791062c459bc88a9d1b9c2d80fc3a3"
+    "version": "39c92fe909e0e0fe80151035f54e3c81"
 };

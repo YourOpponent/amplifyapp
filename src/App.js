@@ -3,21 +3,21 @@ import './App.css';
 import { API, Storage } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { DataStore } from '@aws-amplify/datastore';
-import { Note } from './models';
+import { Artist } from './models';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-import { listNotes } from './graphql/queries';
-import { createNote as createNoteMutation, deleteNote as deleteNoteMutation } from './graphql/mutations';
+// import { listArtists } from './graphql/queries';
+import { createArtist as createArtistMutation, deleteArtist as deleteArtistMutation } from './graphql/mutations';
 
-const initialFormState = { name: '', description: '' }
+const initialFormState = { name: '', description: '', twitchName: '' }
 
 
 function App() {
-  const [notes, setNotes] = useState([]);
+  const [Artists, setArtists] = useState([]);
   const [formData, setFormData] = useState(initialFormState);
 
   useEffect(() => {
-    fetchNotes();
+    fetchArtists();
   }, []);
 
   async function onChange(e) {
@@ -25,79 +25,85 @@ function App() {
     const file = e.target.files[0];
     setFormData({ ...formData, image: file.name });
     await Storage.put(file.name, file);
-    fetchNotes();
+    fetchArtists();
   }
 
-  async function fetchNotes() {
+  async function fetchArtists() {
     //Original
-    // const apiData = await API.graphql({ query: listNotes });
-    // const notesFromAPI = apiData.data.listNotes.items;
-    // await Promise.all(notesFromAPI.map(async note => {
-    //   if (note.image) {
-    //     const image = await Storage.get(note.image);
-    //     note.image = image;
+    // const apiData = await API.graphql({ query: listArtists });
+    // const ArtistsFromAPI = apiData.data.listArtists.items;
+    // await Promise.all(ArtistsFromAPI.map(async Artist => {
+    //   if (Artist.image) {
+    //     const image = await Storage.get(Artist.image);
+    //     Artist.image = image;
     //   }
-    //   return note;
+    //   return Artist;
     // }));
-    // setNotes(apiData.data.listNotes.items);
+    // setArtists(apiData.data.listArtists.items);
 
     // Diff
-    const notes = await DataStore.query(Note);
-    setNotes(notes);
+    const Artists = await DataStore.query(Artist);
+    setArtists(Artists);
   }
 
-  async function createNote() {
+  async function createArtist() {
     if (!formData.name || !formData.description) return;
-    await API.graphql({ query: createNoteMutation, variables: { input: formData } });
+    await API.graphql({ query: createArtistMutation, variables: { input: formData } });
     if (formData.image) {
       const image = await Storage.get(formData.image);
       formData.image = image;
     }
-    setNotes([ ...notes, formData ]);
+    setArtists([ ...Artists, formData ]);
     setFormData(initialFormState);
   }
 
-  async function deleteNote({ id }) {
-    const newNotesArray = notes.filter(note => note.id !== id);
-    setNotes(newNotesArray);
+  async function deleteArtist({ id }) {
+    const newArtistsArray = Artists.filter(Artist => Artist.id !== id);
+    setArtists(newArtistsArray);
 
     //Original
-    // await API.graphql({ query: deleteNoteMutation, variables: { input: id  }});
+    // await API.graphql({ query: deleteArtistMutation, variables: { input: id  }});
 
     //Diff way
-    const noteToDelete = await DataStore.query(Note, id );
-    DataStore.delete(noteToDelete);
+    const ArtistToDelete = await DataStore.query(Artist, id );
+    DataStore.delete(ArtistToDelete);
   }
 
   return (
     <div className="App">
-      <h1>My Notes App</h1>
+      <h1>My Artists App</h1>
       <input
         onChange={e => setFormData({ ...formData, 'name': e.target.value})}
-        placeholder="Note name"
+        placeholder="Artist name"
         value={formData.name}
       />
       <input
         onChange={e => setFormData({ ...formData, 'description': e.target.value})}
-        placeholder="Note description"
+        placeholder="Artist description"
         value={formData.description}
+      />
+      <input
+        onChange={e => setFormData({ ...formData, 'twitchName': e.target.value})}
+        placeholder="Artist Twitch Name"
+        value={formData.twitchName}
       />
       <input
         type="file"
         onChange={onChange}
       />
-      <button onClick={createNote}>Create Note</button>
+      <button onClick={createArtist}>Create Artist</button>
       <div style={{marginBottom: 30}}>
         {
-          notes.map(note => (
-            <div key={note.id || note.name}>
-              <h2>{note.id}</h2>
-              <p>{note.name}</p>
-              <p>{note.description}</p>
-              {/* <p>{note.image}</p> */}
-              <button onClick={() => deleteNote(note)}>Delete note</button>
+          Artists.map(Artist => (
+            <div key={Artist.id || Artist.name}>
+              <h2>{Artist.id}</h2>
+              <p>{Artist.name}</p>
+              <p>{Artist.twitchName}</p>
+              <p>{Artist.description}</p>
+              {/* <p>{Artist.image}</p> */}
+              <button onClick={() => deleteArtist(Artist)}>Delete Artist</button>
               {
-                note.image && <img src={note.image} style={{width: 400}} alt=""/>
+                Artist.image && <img src={Artist.image} style={{width: 400}} alt=""/>
               }
             </div>
           ))

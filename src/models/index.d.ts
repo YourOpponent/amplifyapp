@@ -1,20 +1,20 @@
-import { ModelInit, MutableModel, PersistentModelConstructor } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 
-
-
-
-
-type NoteMetaData = {
+type ArtistMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
 
-export declare class Note {
+export declare class Artist {
   readonly id: string;
-  readonly name: string;
+  readonly visual_name: string;
+  readonly twitchName?: string | null;
   readonly description?: string | null;
   readonly image?: string | null;
+  readonly location?: string | null;
+  readonly email?: string | null;
+  readonly slug?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
-  constructor(init: ModelInit<Note, NoteMetaData>);
-  static copyOf(source: Note, mutator: (draft: MutableModel<Note, NoteMetaData>) => MutableModel<Note, NoteMetaData> | void): Note;
+  constructor(init: ModelInit<Artist, ArtistMetaData>);
+  static copyOf(source: Artist, mutator: (draft: MutableModel<Artist, ArtistMetaData>) => MutableModel<Artist, ArtistMetaData> | void): Artist;
 }
