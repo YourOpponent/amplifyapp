@@ -4,8 +4,10 @@ import { schema } from './schema';
 
 
 
-const { Artist } = initSchema(schema);
+const { EventSlot, Event, Artist } = initSchema(schema);
 
 export {
+  EventSlot,
+  Event,
   Artist
 };
