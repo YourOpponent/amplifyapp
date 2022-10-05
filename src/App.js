@@ -3,11 +3,17 @@ import './App.css';
 import { API, Storage } from 'aws-amplify';
 import { withAuthenticator } from '@aws-amplify/ui-react';
 import { DataStore } from '@aws-amplify/datastore';
-import { Artist } from './models';
+import { Artist, Event, EventSlot } from './models';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
-// import { listArtists } from './graphql/queries';
-import { createArtist as createArtistMutation, deleteArtist as deleteArtistMutation } from './graphql/mutations';
+import { listArtists } from './graphql/queries';
+import  { createArtist as createArtistMutation, 
+          deleteArtist as deleteArtistMutation,
+          createEvent as createEventMutation,
+          deleteEvent as deletedEventMutation,
+          createEventSlot as createEventSlotMutation,
+          deleteEventSlot as deleteEventSlotMutation     
+        } from './graphql/mutations';
 
 const initialFormState = { visual_name: '', twitchName: '', description: '', location: '', email: '', slug:'' }
 
