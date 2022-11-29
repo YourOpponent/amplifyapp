@@ -6,7 +6,11 @@ import { DataStore } from '@aws-amplify/datastore';
 import { Artist, Event, EventSlot } from './models';
 import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
+
 import { listArtists } from './graphql/queries';
+import { read, utils, writeFile } from 'xlsx';
+
+
 import  { createArtist as createArtistMutation, 
           deleteArtist as deleteArtistMutation,
           createEvent as createEventMutation,
@@ -77,6 +81,10 @@ function App() {
 
   return (
     <div className="App">
+      <>
+        <h1>File Upload</h1>
+        <input type="file"></input>
+      </>
       <h1>My Artists App</h1>
       <input
         onChange={e => setFormData({ ...formData, 'visual_name': e.target.value})}
